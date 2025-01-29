@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Learning Platform</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Spicy+Rice&display=swap" rel="stylesheet">
+    <style>
+        /* Reset default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins";
+        }
+
+        /* Body styling */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Header styling */
+        header {
+            background-color: #a58aff; /* Lavender color */
+            color: white;
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background-color: #7f67d2; /* Darker lavender */
+            padding: 15px;
+        }
+
+        header .logo {
+            font-size: 24px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            flex: 1;
+            text-align: left;
+            transition: transform 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        nav ul li {
+            display: inline;
+            position: relative;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #7f67d2; /* Darker lavender */
+            transform: translateY(-3px);
+        }
+
+        /* Hero section styling */
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: url('hero-background.jpg') no-repeat center center/cover;
+            color: black;
+            padding: 40px 20px;
+            position: relative;
+            opacity: 0;
+            animation: fadeInUp 1s forwards;
+            background-color: #a58aff; /* Lavender background */
+        }
+
+        .hero .hero-text {
+            flex: 1;
+            text-align: left;
+            transform: translateY(30px);
+            animation: slideInLeft 1s ease-in-out forwards;
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-family: 'Roboto', sans-serif;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .hero p {
+            font-size: 22px;
+            margin-bottom: 30px;
+        }
+
+        .hero button {
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #7f67d2; /* Lavender button */
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .hero button:hover {
+            background-color: #6b4bbf; /* Darker lavender button */
+        }
+
+        .hero img {
+            width: 50%;
+            max-width: 500px;
+            border-radius: 10px;
+            opacity: 0;
+            animation: fadeInRight 1.5s ease-in-out forwards;
+        }
+
+        /* Courses section styling */
+        .courses {
+            padding: 40px 20px;
+            text-align: center;
+            background-color: #ffffff;
+        }
+
+        .courses h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out forwards;
+            color: #7f67d2; /* Lavender heading */
+        }
+
+        /* Course list and card layout */
+        .course-list {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        /* Neuromorphism Effect for Course Cards */
+        .course {
+            background: #e0e5ec;
+            border-radius: 15px;
+            padding: 20px;
+            width: 250px;
+            box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.1), -8px -8px 15px rgba(255, 255, 255, 0.8);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .course h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #7f67d2; /* Lavender course titles */
+        }
+
+        .course p {
+            font-size: 16px;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .course button {
+            align-self: flex-start;
+            padding: 10px 20px;
+            background-color: #7f67d2; /* Lavender button */
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s ease;
+            margin-top: 10px;
+            width: 100%;
+            max-width: 200px;
+        }
+
+        .course button:hover {
+            background-color: #6b4bbf;
+            transform: translateY(-5px);
+        }
+
+        .course:hover {
+            transform: translateY(-10px);
+            box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.15), -12px -12px 20px rgba(255, 255, 255, 0.9);
+        }
+
+        /* About section styling */
+        #about {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 60px 20px;
+            background-color: #ffffff;
+        }
+
+        #about .about-text {
+            flex: 1;
+            max-width: 500px;
+            text-align: left;
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+
+        #about h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #7f67d2; /* Lavender heading */
+        }
+
+        #about p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        #about .about-images {
+            display: flex;
+            gap: 20px;
+            justify-content: flex-end;
+        }
+
+        #about .about-images img {
+            width: 200px;
+            height: 200px;
+            border-radius: 10px;
+            object-fit: cover;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1), -4px -4px 10px rgba(255, 255, 255, 0.8);
+            transform: translateY(50px);
+            opacity: 0;
+            animation: fadeInUp 1.5s ease-in-out forwards;
+        }
+
+        /* Footer styling */
+        footer {
+            background-color: #a58aff; /* Lavender footer */
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            opacity: 0;
+            animation: fadeIn 2s ease-in-out forwards;
+        }
+
+        /* Time tracker circle */
+        #timeTracker {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #7f67d2;
+            color: white;
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        /* Draggable functionality */
+        #timeTracker:active {
+            transform: scale(0.9);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInRight {
+            0% { opacity: 0; transform: translateX(20px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInLeft {
+            0% { transform: translateX(-50px); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes dropdownAnimation {
+            0% { opacity: 0; transform: translateY(-10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">EdGrow</div>
+            <ul class="nav-links">
+                <li><a href="/main.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="/courses.html">Courses</a>
+                </li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-text">
+            <h1>Learn Anytime, Anywhere</h1>
+            <p>Join our platform and start your learning journey today!</p>
+            <a href="login.html">
+                <button>Sign In</button>
+            </a>
+            <a href="login.html">
+                <button>Sign Up</button>
+            </a>
+        </div>
+        
+        <img src="img/home_img.png" alt="Learning Image"> 
+        <div class="draggable" id="dragMe">
+         
+        </div>             
+    </section>
+
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#a58aff" fill-opacity="1" d="M0,192L48,208C96,224,192,256,288,250.7C384,245,480,203,576,192C672,181,768,203,864,229.3C960,256,1056,288,1152,256C1248,224,1344,128,1392,80L1440,32L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path></svg>
+
+    <section class="courses" id="courses">
+        <h2>Our Courses</h2>
+        <div class="course-list">
+            <div class="course">
+                <h3>Web Development</h3>
+                <p>Learn to build modern websites using HTML, CSS, and JavaScript.</p>
+                <button>Enroll Now</button>
+            </div>
+            <div class="course">
+                <h3>Data Science</h3>
+                <p>Master data analysis and machine learning techniques.</p>
+                <button>Enroll Now</button>
+            </div>
+            <div class="course">
+                <h3>Cyber Security</h3>
+                <p>Protect digital assets and learn ethical hacking skills.</p>
+                <button>Enroll Now</button>
+            </div>
+            <div class="course">
+                <h3>A I</h3>
+                <p>Delve into the world of AI and learn how to create intelligent systems.</p>
+                <button>Enroll Now</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="about-text">
+            <h2>About Us</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vulputate, lorem eget euismod viverra, quam erat tempus mi, a convallis purus ante eu risus.</p>
+        </div>
+        <div class="about-images">
+            <img src="img/about-img1.webp" alt="About Image 1">
+            <img src="img/about-img2.webp" alt="About Image 2">
+        </div>
+    </section>
+
+    <div id="timeTracker">00:00</div>
+
+
+
+    <script>
+        // Make the time tracker draggable
+        const timeTracker = document.getElementById('timeTracker');
+        let offsetX = 0, offsetY = 0;
+
+        timeTracker.addEventListener('mousedown', (e) => {
+            offsetX = e.clientX - timeTracker.getBoundingClientRect().left;
+            offsetY = e.clientY - timeTracker.getBoundingClientRect().top;
+
+            const onMouseMove = (e) => {
+                timeTracker.style.left = e.clientX - offsetX + 'px';
+                timeTracker.style.top = e.clientY - offsetY + 'px';
+            };
+
+            const onMouseUp = () => {
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
+            };
+
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+        });
+
+        // Track time spent on the site
+        let startTime = Date.now();
+        setInterval(() => {
+            const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+            const minutes = Math.floor(elapsedTime / 60);
+            const seconds = elapsedTime % 60;
+            timeTracker.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }, 1000);
+    </script>
+</body>
+</html>
