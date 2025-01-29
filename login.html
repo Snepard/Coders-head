@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Spicy+Rice&display=swap" rel="stylesheet">
+    <title>Sign In / Sign Up</title>
+    <style>
+   /* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins";
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: #e8d5f9;  /* Lavender Background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    background-image: url('https://source.unsplash.com/1920x1080/?lavender,abstract'); /* Optional lavender themed image */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* Main container */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+/* Form container with glass effect (Improved) */
+.form-container {
+    background: rgba(255, 255, 255, 0.3);  /* Lighter background */
+    border-radius: 10px; /* Rounded corners */
+    padding: 40px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(12px); /* More subtle blur */
+    transition: all 0.3s ease-in-out;
+    width: 100%;
+    max-width: 400px;
+    animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-container:hover {
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.35);
+}
+
+/* Buttons for Sign In / Sign Up toggle */
+.toggle-btn {
+    display: flex;
+    margin-bottom: 30px;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.btn {
+    padding: 12px 24px;
+    border-radius: 30px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.6); /* Slight transparency */
+    backdrop-filter: blur(8px);
+    box-shadow: 5px 5px 15px rgba(173, 173, 173, 0.4), -5px -5px 15px rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn.active {
+    background-color: #9b7dd8; /* Lavender active button */
+    color: white;
+    box-shadow: 5px 5px 20px rgba(255, 255, 255, 0.3), -5px -5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.btn:hover {
+    background-color: rgba(225, 225, 230, 0.7);
+    box-shadow: 5px 5px 15px rgba(173, 173, 173, 0.4), -5px -5px 15px rgba(255, 255, 255, 0.8);
+}
+
+/* Form styles with glass effect */
+.form-content {
+    display: flex;
+    flex-direction: column;
+    color: #4b2a79;  /* Dark Lavender Text */
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #5e3b99;  /* Slightly darker lavender for heading */
+}
+
+input {
+    margin-bottom: 15px;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(6px);
+    font-size: 16px;
+    color: #4b2a79; /* Dark lavender text for inputs */
+    transition: box-shadow 0.3s ease;
+}
+
+input:focus {
+    outline: none;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2), inset 0 0 15px rgba(255, 255, 255, 0.6);
+}
+
+/* Submit button styling */
+.submit-btn {
+    padding: 12px;
+    background: #9b7dd8;  /* Lavender button */
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background: #7e61a8;  /* Slightly darker lavender */
+}
+
+.toggle-link {
+    color: #9b7dd8;  /* Lavender link color */
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .form-container {
+        width: 90%;
+    }
+
+    .btn {
+        font-size: 14px;
+        padding: 10px 18px;
+    }
+
+    .submit-btn {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <div class="toggle-btn">
+                <button class="btn active" onclick="toggleForm('signin')">Sign In</button>
+                <button class="btn" onclick="toggleForm('signup')">Sign Up</button>
+            </div>
+
+            <div class="form-content">
+                <div class="signin-form">
+                    <h2>Sign In</h2>
+                    <input type="text" placeholder="Username" id="signin-username" required>
+                    <input type="password" placeholder="Password" id="signin-password" required>
+                    <button class="submit-btn" id="signin-btn">Sign In</button>
+                </div>
+            
+                <div class="signup-form hidden">
+                    <h2>Sign Up</h2>
+                    <input type="text" placeholder="Username" id="signup-username" required>
+                    <input type="email" placeholder="Email" id="signup-email" required>
+                    <input type="password" placeholder="Password" id="signup-password" required>
+                    <button class="submit-btn" id="signup-btn">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Handle sign in
+        document.getElementById('signin-btn').addEventListener('click', function() {
+            // You can add validation logic here before redirecting
+            window.location.href = "new.html";  // Redirect to new.html for sign-in
+        });
+    
+        // Handle sign up
+        document.getElementById('signup-btn').addEventListener('click', function() {
+            // You can add validation logic here before redirecting
+            window.location.href = "new.html";  // Redirect to new.html for sign-up
+        });
+    
+        // Switch between Sign In and Sign Up forms
+        document.getElementById('switch-to-signup').addEventListener('click', function() {
+            document.querySelector('.signin-form').classList.add('hidden');
+            document.querySelector('.signup-form').classList.remove('hidden');
+        });
+    
+        document.getElementById('switch-to-signin').addEventListener('click', function() {
+            document.querySelector('.signup-form').classList.add('hidden');
+            document.querySelector('.signin-form').classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>

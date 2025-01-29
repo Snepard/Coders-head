@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Education Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<style>
+  *{
+    font-family: "Poppins";
+  }
+</style>
+<body class="bg-gray-100">
+
+  <div id="main-content" class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white p-5 border-r hidden lg:block">
+      <h1 class="text-2xl font-bold text-purple-600">CourseHub</h1>
+      <nav class="mt-5">
+        <ul class="space-y-4 text-gray-700">
+          <li class="font-semibold hover:text-purple-600 cursor-pointer" onclick="showDashboard()">📊 Dashboard</li>
+          <li class="hover:text-purple-600 cursor-pointer">📩 Inbox</li>
+          <li class="hover:text-purple-600 cursor-pointer"><a href="/courses.html">📚 Courses</a></li>
+          <li class="hover:text-purple-600 cursor-pointer">📋 Task</li>
+          <li class="hover:text-purple-600 cursor-pointer">👥 Group</li>
+        </ul>
+      </nav>
+
+      <!-- Friends Section -->
+      <div class="mt-10">
+        <h2 class="font-bold text-gray-700">Friends</h2>
+        <ul class="mt-3 space-y-2">
+          <li class="flex items-center gap-2">👤 Andrew Meter</li>
+          <li class="flex items-center gap-2">👤 Jeff Linkoln</li>
+          <li class="flex items-center gap-2">👤 Sasha Melstone</li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main id="dashboard" class="flex-1 p-6 hidden">
+      <!-- Search Bar -->
+      <div class="mt-6 flex items-center gap-4">
+        <input type="text" id="course-search" placeholder="Search Courses..." class="border border-gray-300 px-4 py-2 rounded-lg w-80" oninput="searchCourses()">
+        <button class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700">Search</button>
+      </div>
+
+      <!-- Courses Grid -->
+      <h3 class="mt-6 text-lg font-bold">Continue Watching</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4" id="courses-list">
+        <!-- Courses will be injected here dynamically -->
+      </div>
+    </main>
+
+    <!-- Profile Section -->
+    <aside class="w-64 bg-white p-5 border-l hidden lg:block">
+      <h2 class="font-bold text-gray-700">Your Profile</h2>
+      <div class="mt-3 text-center">
+        <div class="w-20 h-20 bg-purple-600 text-white flex items-center justify-center rounded-full text-2xl mx-auto">
+          A
+        </div>
+        <p class="mt-2 font-semibold">Alex Johnson</p>
+      </div>
+
+      <!-- Your Mentor Section -->
+      <div class="mt-5">
+        <h3 class="font-bold text-gray-700">Your Mentor</h3>
+        <ul class="mt-3 space-y-2">
+          <li class="flex justify-between">👤 Killian Rosvelt <button class="text-purple-600 hover:underline follow-btn" onclick="toggleFollow(this)">Follow</button></li>
+          <li class="flex justify-between">👤 Teedor Maskevich <button class="text-purple-600 hover:underline follow-btn" onclick="toggleFollow(this)">Follow</button></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Video Page Section (Hidden by default) -->
+  <div id="video-page" class="hidden max-w-4xl mx-auto p-6 bg-white mt-10 rounded-lg shadow-md">
+    <div class="text-center">
+      <h1 class="text-2xl font-bold text-purple-600" id="course-title"></h1>
+      <div class="mt-6">
+        <!-- Video Player (replace with real video link) -->
+        <video id="video-player" class="w-full h-64" controls>
+          <source id="video-source" src="" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <button class="mt-4 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700" onclick="backToDashboard()">Back to Dashboard</button>
+    </div>
+  </div>
+
+  <script>
+    const courses = [
+      { title: "Python for Beginners", description: "Learn Python from scratch." },
+      { title: "Advanced JavaScript", description: "Master the intricacies of JavaScript." },
+      { title: "Data Science Basics", description: "Introduction to Data Science and analysis." },
+      { title: "Frontend Development", description: "Learn HTML, CSS, and JavaScript to build modern websites." },
+      { title: "Backend Development with Node.js", description: "Create RESTful APIs and work with databases." },
+      { title: "React.js for Beginners", description: "Learn React to build interactive UIs." },
+      { title: "Machine Learning with Python", description: "Get introduced to machine learning and AI." },
+      { title: "Web Design Principles", description: "Learn how to design user-friendly websites." },
+    ];
+
+    const courseLinks = {
+      "Python for Beginners": "python-for-beginners",
+      "Advanced JavaScript": "advanced-javascript",
+      "Data Science Basics": "data-science-basics",
+      "Frontend Development": "frontend-development",
+      "Backend Development with Node.js": "backend-development",
+      "React.js for Beginners": "react-for-beginners",
+      "Machine Learning with Python": "machine-learning-python",
+      "Web Design Principles": "web-design-principles"
+    };
+
+    const videoLinks = {
+      'python-for-beginners': 'https://www.example.com/video/python-for-beginners.mp4',
+      'advanced-javascript': 'https://www.example.com/video/advanced-javascript.mp4',
+      'data-science-basics': 'https://www.example.com/video/data-science.mp4',
+      // Add other courses and their video links here
+    };
+
+    function displayCourses(filteredCourses = courses) {
+      const courseList = document.getElementById("courses-list");
+      courseList.innerHTML = ""; // Clear the existing courses
+      filteredCourses.forEach(course => {
+        const card = document.createElement("div");
+        card.classList.add("bg-white", "p-4", "rounded-lg", "shadow-md");
+        card.innerHTML = `
+          <h4 class="text-xl font-semibold text-purple-600">${course.title}</h4>
+          <p class="text-gray-600 mt-2">${course.description}</p>
+          <button class="mt-4 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700" onclick="continueWatching('${course.title}')">Continue Watching</button>
+        `;
+        courseList.appendChild(card);
+      });
+    }
+
+    function searchCourses() {
+      const searchQuery = document.getElementById("course-search").value.toLowerCase();
+      const filteredCourses = courses.filter(course => 
+        course.title.toLowerCase().includes(searchQuery) || 
+        course.description.toLowerCase().includes(searchQuery)
+      );
+      displayCourses(filteredCourses);
+    }
+
+    function continueWatching(courseTitle) {
+      if (courseLinks[courseTitle]) {
+        showVideoPage(courseLinks[courseTitle]);
+      } else {
+        alert("Course page not available yet.");
+      }
+    }
+
+    function showDashboard() {
+      document.getElementById('main-content').style.display = 'flex';
+      document.getElementById('dashboard').style.display = 'block';
+      document.getElementById('video-page').style.display = 'none';
+    }
+
+    function showVideoPage(courseSlug) {
+      const videoSource = document.getElementById('video-source');
+      const courseTitle = document.getElementById('course-title');
+
+      if (videoLinks[courseSlug]) {
+        courseTitle.innerText = courseSlug.replace(/-/g, ' ').toUpperCase(); // Capitalize the course title
+        videoSource.src = videoLinks[courseSlug];
+        document.getElementById('video-player').load();
+
+        document.getElementById('main-content').style.display = 'none';
+        document.getElementById('video-page').style.display = 'block';
+      } else {
+        alert("Video not available for this course.");
+      }
+    }
+
+    function backToDashboard() {
+      showDashboard();
+    }
+
+    function toggleFollow(button) {
+      if (button.innerText === "Follow") {
+        button.innerText = "Following";
+        button.classList.add("text-green-600");
+      } else {
+        button.innerText = "Follow";
+        button.classList.remove("text-green-600");
+      }
+    }
+
+    // Initially display all courses
+    displayCourses();
+    showDashboard();
+  </script>
+
+</body>
+</html>
